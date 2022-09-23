@@ -10,8 +10,6 @@ class Cart extends Component {
   constructor(props) {
     super(props);
     this.state = {};
-
-    console.log(props);
   }
 
   render() {

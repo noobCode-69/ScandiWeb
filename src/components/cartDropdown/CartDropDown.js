@@ -7,8 +7,7 @@ import DropDown from "../hoc/DropDown";
 import CartItem from "../cartItem/CartItem";
 import CartTotal from "../cartTotal/CartTotal";
 
-
-import { emptyCartItems } from "../../redux/actions";
+import { emptyCartItems as emptyCartItemsAction } from "../../redux/actions";
 
 class CartDropDown extends Component {
   constructor(props) {
@@ -28,7 +27,12 @@ class CartDropDown extends Component {
   };
 
   render() {
-    const { cartItems } = this.props;
+    const {
+      cartItems,
+      toggle,
+      emptyCartItemsAction: emptyCartItems,
+      isOpen,
+    } = this.props;
 
     if (cartItems === null || cartItems === undefined) {
       return null;
@@ -36,11 +40,9 @@ class CartDropDown extends Component {
 
     return (
       <StyledCartContainer>
-        {this.props.isOpen === true && (
-          <StyledBackDrop onClick={this.onClickOutside} />
-        )}
+        {isOpen === true && <StyledBackDrop onClick={this.onClickOutside} />}
 
-        <div onClick={() => this.props.toggle()} className="cart-svg">
+        <div onClick={() => toggle()} className="cart-svg">
           <svg
             width="20"
             height="19"
@@ -65,7 +67,7 @@ class CartDropDown extends Component {
           <div className="quantity-indicator">{this.getTotalItems()}</div>
         </div>
 
-        {this.props.isOpen === true && (
+        {isOpen === true && (
           <StyledCartMenuContainer>
             <p className="cart-menu-quantity">
               My Bag, {this.getTotalItems()} items
@@ -83,7 +85,7 @@ class CartDropDown extends Component {
 
             <div className="cart-menu-buttons-container">
               <Link
-                onClick={() => this.props.toggle()}
+                onClick={() => toggle()}
                 to="/cart"
                 className="cart-menu-button"
               >
@@ -93,8 +95,8 @@ class CartDropDown extends Component {
               <StyledCheckoutButton
                 myBag={this.getTotalItems()}
                 onClick={() => {
-                  this.props.emptyCartItems();
-                  this.props.toggle();
+                  emptyCartItems();
+                  toggle();
                 }}
               >
                 CHECKOUT
@@ -204,5 +206,5 @@ const mapStateToProps = (state) => ({
 });
 
 export default DropDown(
-  connect(mapStateToProps, { emptyCartItems })(CartDropDown)
+  connect(mapStateToProps, { emptyCartItemsAction })(CartDropDown)
 );

@@ -14,7 +14,6 @@ import ProductAttributes from "../product-utils/productAttributes/ProductAttribu
 class Product extends Component {
   constructor(props) {
     super(props);
-
     this.state = {
       productDetails: null,
       productAttributes: null,

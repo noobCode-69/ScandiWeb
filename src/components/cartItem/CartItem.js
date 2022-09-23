@@ -1,12 +1,12 @@
-import React, { Component } from 'react';
-import { connect } from 'react-redux';
+import React, { Component } from "react";
+import { connect } from "react-redux";
 
-import style from './CartItem.module.css';
-import { updateToCartQuantity } from '../../redux/actions';
-import ProductAmount from '../product-utils/productAmount/ProductAmount';
-import ProductAttributes from '../product-utils/productAttributes/ProductAttributes';
+import style from "./CartItem.module.css";
+import { updateToCartQuantity as updateToCartQuantityAction } from "../../redux/actions";
+import ProductAmount from "../product-utils/productAmount/ProductAmount";
+import ProductAttributes from "../product-utils/productAttributes/ProductAttributes";
 
-import ProductCarousel from '../product-utils/productCarousel/ProductCarousel';
+import ProductCarousel from "../product-utils/productCarousel/ProductCarousel";
 
 class CartItem extends Component {
   constructor(props) {
@@ -14,15 +14,14 @@ class CartItem extends Component {
   }
 
   changeProductQuantity = (increase) => {
-    const { productQuantity, productId, productSelectedAttributes } = this.props.item;
+    const { productQuantity, productId, productSelectedAttributes } =
+      this.props.item;
+    const { updateToCartQuantityAction: updateToCartQuantity } = this.props;
 
-    const quantity = increase == true ? productQuantity + 1 : productQuantity - 1;
+    const quantity =
+      increase == true ? productQuantity + 1 : productQuantity - 1;
 
-    this.props.updateToCartQuantity(
-      productId,
-      productSelectedAttributes,
-      quantity,
-    );
+    updateToCartQuantity(productId, productSelectedAttributes, quantity);
   };
 
   render() {
@@ -36,23 +35,25 @@ class CartItem extends Component {
       productGallery,
     } = this.props.item;
 
+    const { lableFontSize, optionWidth } = this.props;
+
     return (
       <div className={style.cart}>
-        <div className={style['cart-info-container']}>
-          <div className={style['cart-info-name-brand']}>
-            <p className={style['cart-info-name']}>{productName}</p>
-            <p className={style['cart-info-brand']}>{productBrand}</p>
+        <div className={style["cart-info-container"]}>
+          <div className={style["cart-info-name-brand"]}>
+            <p className={style["cart-info-name"]}>{productName}</p>
+            <p className={style["cart-info-brand"]}>{productBrand}</p>
           </div>
 
-          <div className={style['cart-info-price']}>
+          <div className={style["cart-info-price"]}>
             <ProductAmount priceArray={productPrice} />
           </div>
 
-          {this.props.item.productAttributes.length != 0 && (
+          {productAttributes.length != 0 && (
             <div className="cart-item-attributes-container">
               <ProductAttributes
-                lableFontSize={this.props.lableFontSize}
-                optionWidth={this.props.optionWidth}
+                lableFontSize={lableFontSize}
+                optionWidth={optionWidth}
                 attributes={productAttributes}
                 productAttributes={productSelectedAttributes}
               />
@@ -61,17 +62,17 @@ class CartItem extends Component {
         </div>
 
         <div className={style.wrapper}>
-          <div className={style['cart-quantity']}>
+          <div className={style["cart-quantity"]}>
             <div
               onClick={() => this.changeProductQuantity(true)}
-              className={style['cart-quantity-button']}
+              className={style["cart-quantity-button"]}
             >
               +
             </div>
             <div className="cart-item-quantity">{productQuantity}</div>
             <div
               onClick={() => this.changeProductQuantity(false)}
-              className={style['cart-quantity-button']}
+              className={style["cart-quantity-button"]}
             >
               -
             </div>
@@ -83,8 +84,8 @@ class CartItem extends Component {
   }
 }
 
-const mapStateToProps = (state) => ({});
+const mapStateToProps = () => ({});
 
 export default connect(mapStateToProps, {
-  updateToCartQuantity,
+  updateToCartQuantityAction,
 })(CartItem);

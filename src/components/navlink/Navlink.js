@@ -1,6 +1,6 @@
-import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
-import style from './Navlink.module.css';
+import React, { Component } from "react";
+import { Link } from "react-router-dom";
+import style from "./Navlink.module.css";
 
 class Navlink extends Component {
   constructor(props) {
@@ -8,13 +8,15 @@ class Navlink extends Component {
   }
 
   render() {
+    const { isActive, url, onClick, text } = this.props;
+
     return (
       <Link
-        className={this.props.isActive == true ? style.active : style.inactive}
-        to={this.props.url}
-        onClick={() => this.props.onClick(this.props.text)}
+        className={isActive == true ? style.active : style.inactive}
+        to={url}
+        onClick={() => onClick(this.props.text)}
       >
-        {this.props.text.toUpperCase()}
+        {text.toUpperCase()}
       </Link>
     );
   }

@@ -1,5 +1,5 @@
-import React, { Component } from 'react';
-import style from './ProductAttributeGeneral.module.css';
+import React, { Component } from "react";
+import style from "./ProductAttributeGeneral.module.css";
 
 class ProductAttributeGeneral extends Component {
   constructor(props) {
@@ -7,26 +7,28 @@ class ProductAttributeGeneral extends Component {
   }
 
   render() {
+    const {
+      selectedValue,
+      changeProductAttributes,
+      attribute,
+      optionWidth,
+      lableFontSize,
+    } = this.props;
+
     return (
-      <div className={style['attribute-container']}>
-        <p
-          className={style.label}
-          style={{ fontSize: `${this.props.lableFontSize}` }}
-        >
-          {this.props.attribute.name.toUpperCase()}
+      <div className={style["attribute-container"]}>
+        <p className={style.label} style={{ fontSize: `${lableFontSize}` }}>
+          {attribute.name.toUpperCase()}
         </p>
         <div className={style.options}>
-          {this.props.attribute.items.map((option) => (
+          {attribute.items.map((option) => (
             <div
-              style={{ width: `${this.props.optionWidth}` }}
+              style={{ width: `${optionWidth}` }}
               className={`${style.option}  ${
-                option.id == this.props.selectedValue ? style.active : null
+                option.id == selectedValue ? style.active : null
               } `}
               key={option.id}
-              onClick={() => this.props.changeProductAttributes(
-                this.props.attribute.id,
-                option.id,
-              )}
+              onClick={() => changeProductAttributes(attribute.id, option.id)}
             >
               <p>{option.value}</p>
             </div>

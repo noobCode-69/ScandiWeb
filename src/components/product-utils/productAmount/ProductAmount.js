@@ -1,5 +1,5 @@
-import React, { Component } from 'react';
-import { connect } from 'react-redux';
+import React, { Component } from "react";
+import { connect } from "react-redux";
 
 class ProductAmount extends Component {
   constructor(props) {
@@ -7,8 +7,10 @@ class ProductAmount extends Component {
   }
 
   getPrice = (pricesArray) => {
+    const { selectedCurrency } = this.props;
+
     const priceObj = pricesArray.find((price) => {
-      if (price.currency.label === this.props.selectedCurrency.label) {
+      if (price.currency.label === selectedCurrency.label) {
         return true;
       }
       return false;
@@ -17,20 +19,23 @@ class ProductAmount extends Component {
   };
 
   render() {
-    if (this.props.selectedCurrency == null || this.props.selectedCurrency == undefined) {
+    const { selectedCurrency, priceArray } = this.props;
+
+    if (selectedCurrency == null || selectedCurrency == undefined) {
       return null;
     }
 
     return (
       <p>
-        {this.getPrice(this.props.priceArray).currency.symbol}
-        {' '}
-        {this.getPrice(this.props.priceArray).amount.toFixed(2)}
+        {this.getPrice(priceArray).currency.symbol}{" "}
+        {this.getPrice(priceArray).amount.toFixed(2)}
       </p>
     );
   }
 }
 
-const mapStateToProps = (state) => ({ selectedCurrency: state.selectedCurrency });
+const mapStateToProps = (state) => ({
+  selectedCurrency: state.selectedCurrency,
+});
 
 export default connect(mapStateToProps)(ProductAmount);

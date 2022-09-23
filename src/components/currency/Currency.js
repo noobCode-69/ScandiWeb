@@ -1,10 +1,10 @@
-import React, { Component } from 'react';
-import { connect } from 'react-redux';
-import DropDown from '../hoc/DropDown';
-import style from './Currency.module.css';
-import { updateCurrency } from '../../redux/actions';
-import { fetchCurrencies } from '../../utils/api';
-import withRouter from '../hoc/withRouter';
+import React, { Component } from "react";
+import { connect } from "react-redux";
+import DropDown from "../hoc/DropDown";
+import style from "./Currency.module.css";
+import { updateCurrency as updateCurrencyAction } from "../../redux/actions";
+import { fetchCurrencies } from "../../utils/api";
+import withRouter from "../hoc/withRouter";
 
 class Currency extends Component {
   constructor(props) {
@@ -15,54 +15,62 @@ class Currency extends Component {
   }
 
   async componentDidMount() {
+    const {
+      navigate,
+      selectedCurrency,
+      updateCurrencyAction: updateCurrency,
+    } = this.props;
+
     const data = await fetchCurrencies();
-    if (data.error != undefined) {
-      this.props.navigate('/error');
+    if (data.error !== undefined) {
+      navigate("/error");
       return;
     }
 
-    this.setState({
-      ...this.state,
-      currencies: data.data.currencies,
+    const { currencies } = data.data;
+
+    this.setState((prevProps) => {
+      return {
+        ...prevProps,
+        currencies: data.data.currencies,
+      };
     });
 
-    if (
-      this.props.selectedCurrency == null
-      || this.props.selectedCurrency == undefined
-    ) {
-      this.props.updateCurrency({
-        label: data.data.currencies[0].label,
-        symbol: data.data.currencies[0].symbol,
+    if (selectedCurrency === null || selectedCurrency === undefined) {
+      updateCurrency({
+        label: currencies[0].label,
+        symbol: currencies[0].symbol,
       });
     }
   }
 
   onClickOutside = () => {
-    this.props.toggle();
+    const { toggle } = this.props;
+    toggle();
   };
 
   render() {
+    const { selectedCurrency, isOpen, toggle } = this.props;
+    const { currencies } = this.state;
+
     if (
-      this.state.currencies == null
-      || this.props.selectedCurrency == null
-      || this.props.selectedCurrency == undefined
+      currencies === null ||
+      selectedCurrency === null ||
+      selectedCurrency === undefined
     ) {
       return null;
     }
 
     return (
-      <div style={{ position: 'relative' }}>
-        {this.props.isOpen == true && (
+      <div style={{ position: "relative" }}>
+        {isOpen === true && (
           <div className={style.backdrop} onClick={this.onClickOutside} />
         )}
 
-        <div
-          className={style['currency-icon-container']}
-          onClick={this.props.toggle}
-        >
-          <p>{this.props.selectedCurrency.symbol}</p>
-          {this.props.isOpen == false ? (
-            <div className={style['svg-container']}>
+        <div className={style["currency-icon-container"]} onClick={toggle}>
+          <p>{selectedCurrency.symbol}</p>
+          {isOpen === false ? (
+            <div className={style["svg-container"]}>
               <svg
                 width="8"
                 height="4"
@@ -79,7 +87,7 @@ class Currency extends Component {
               </svg>
             </div>
           ) : (
-            <div className={style['svg-container']}>
+            <div className={style["svg-container"]}>
               <svg
                 width="8"
                 height="4"
@@ -98,9 +106,9 @@ class Currency extends Component {
           )}
         </div>
 
-        {this.props.isOpen == true && (
-          <div className={style['options-container']}>
-            {this.state.currencies.map((currency) => (
+        {isOpen === true && (
+          <div className={style["options-container"]}>
+            {currencies.map((currency) => (
               <div
                 className={style.option}
                 onClick={() => {
@@ -108,13 +116,11 @@ class Currency extends Component {
                     label: currency.label,
                     symbol: currency.symbol,
                   });
-                  this.props.toggle();
+                  toggle();
                 }}
                 key={currency.label}
               >
-                {currency.symbol}
-                {' '}
-                {currency.label}
+                {currency.symbol} {currency.label}
               </div>
             ))}
           </div>
@@ -129,5 +135,5 @@ const mapStateToProps = (state) => ({
 });
 
 export default withRouter(
-  DropDown(connect(mapStateToProps, { updateCurrency })(Currency)),
+  DropDown(connect(mapStateToProps, { updateCurrencyAction })(Currency))
 );

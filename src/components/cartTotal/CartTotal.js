@@ -1,6 +1,6 @@
-import React, { Component } from 'react';
-import { connect } from 'react-redux';
-import styled from 'styled-components';
+import React, { Component } from "react";
+import { connect } from "react-redux";
+import styled from "styled-components";
 
 class CartTotal extends Component {
   constructor(props) {
@@ -21,13 +21,20 @@ class CartTotal extends Component {
   }
 
   getTotalItems = () => {
-    const quantity = this.props.cartItems.reduce((accumulator, item) => accumulator + item.productQuantity, 0);
+    const { cartItems } = this.props;
+
+    const quantity = cartItems.reduce(
+      (accumulator, item) => accumulator + item.productQuantity,
+      0
+    );
     return quantity;
   };
 
   getProductPrice = (pricesArray) => {
+    const { selectedCurrency } = this.props;
+
     const priceObj = pricesArray.find((price) => {
-      if (price.currency.label === this.props.selectedCurrency.label) {
+      if (price.currency.label === selectedCurrency.label) {
         return true;
       }
       return false;
@@ -44,20 +51,22 @@ class CartTotal extends Component {
 
     let price = 0;
     for (let i = 0; i < cartItems.length; ++i) {
-      price
-        += this.getProductPrice(cartItems[i].productPrice).amount
-        * cartItems[i].productQuantity;
+      price +=
+        this.getProductPrice(cartItems[i].productPrice).amount *
+        cartItems[i].productQuantity;
     }
-    this.setState({ ...this.state, total: price });
+    this.setState((prevState) => {
+      return { ...prevState, total: price };
+    });
   };
 
   render() {
     const { selectedCurrency } = this.props;
     const { total } = this.state;
     if (
-      selectedCurrency == undefined
-      || selectedCurrency == null
-      || total == null
+      selectedCurrency == undefined ||
+      selectedCurrency == null ||
+      total == null
     ) {
       return null;
     }
@@ -65,22 +74,13 @@ class CartTotal extends Component {
     return (
       <StyleProductTotalContainer>
         <p>
-          Tax 21% :
-          {' '}
-          {selectedCurrency.symbol}
-          {'   '}
+          Tax 21% : {selectedCurrency.symbol}
+          {"   "}
           {(0.21 * total).toFixed(2)}
         </p>
+        <p>Quantity :{this.getTotalItems()}</p>
         <p>
-          Quantity :
-          {this.getTotalItems()}
-        </p>
-        <p>
-          Total :
-          {' '}
-          {selectedCurrency.symbol}
-          {' '}
-          {total.toFixed(2)}
+          Total : {selectedCurrency.symbol} {total.toFixed(2)}
         </p>
       </StyleProductTotalContainer>
     );

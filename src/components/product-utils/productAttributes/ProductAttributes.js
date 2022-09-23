@@ -1,7 +1,7 @@
-import React, { Component } from 'react';
-import styled from 'styled-components';
-import ProductAttributeGeneral from '../ProductAttributeGeneral/ProductAttributeGeneral';
-import ProductAttributeSwatch from '../productAttributeSwatch/ProductAttributeSwatch';
+import React, { Component } from "react";
+import styled from "styled-components";
+import ProductAttributeGeneral from "../ProductAttributeGeneral/ProductAttributeGeneral";
+import ProductAttributeSwatch from "../productAttributeSwatch/ProductAttributeSwatch";
 
 class ProductAttributes extends Component {
   constructor(props) {
@@ -9,29 +9,37 @@ class ProductAttributes extends Component {
   }
 
   render() {
+    const {
+      attributes,
+      lableFontSize,
+      optionWidth,
+      productAttributes,
+      changeProductAttributes,
+    } = this.props;
+
     return (
       <StyledAttributesContainer>
-        {this.props.attributes.map((attribute) => {
-          if (attribute.type == 'swatch') {
+        {attributes.map((attribute) => {
+          if (attribute.type == "swatch") {
             return (
               <ProductAttributeSwatch
-                lableFontSize={this.props.lableFontSize}
-                optionWidth={this.props.optionWidth}
+                lableFontSize={lableFontSize}
+                optionWidth={optionWidth}
                 key={attribute.id}
-                selectedValue={this.props.productAttributes[attribute.id]}
+                selectedValue={productAttributes[attribute.id]}
                 attribute={attribute}
-                changeProductAttributes={this.props.changeProductAttributes}
+                changeProductAttributes={changeProductAttributes}
               />
             );
           }
           return (
             <ProductAttributeGeneral
-              lableFontSize={this.props.lableFontSize}
-              optionWidth={this.props.optionWidth}
+              lableFontSize={lableFontSize}
+              optionWidth={optionWidth}
               key={attribute.id}
-              selectedValue={this.props.productAttributes[attribute.id]}
+              selectedValue={productAttributes[attribute.id]}
               attribute={attribute}
-              changeProductAttributes={this.props.changeProductAttributes}
+              changeProductAttributes={changeProductAttributes}
             />
           );
         })}

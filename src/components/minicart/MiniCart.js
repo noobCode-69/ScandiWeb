@@ -1,8 +1,8 @@
-import React, { Component } from 'react';
-import { connect } from 'react-redux';
-import ProductAttributes from '../product-utils/productAttributes/ProductAttributes';
-import { addToCart } from '../../redux/actions';
-import style from './MiniCart.module.css';
+import React, { Component } from "react";
+import { connect } from "react-redux";
+import ProductAttributes from "../product-utils/productAttributes/ProductAttributes";
+import { addToCart as addToCartAction } from "../../redux/actions";
+import style from "./MiniCart.module.css";
 
 class MiniCart extends Component {
   constructor(props) {
@@ -16,59 +16,75 @@ class MiniCart extends Component {
 
   componentDidMount() {
     const attributeMap = {};
-    for (let i = 0; i < this.props.productDetails.attributes.length; ++i) {
-      const attr = this.props.productDetails.attributes[i];
+
+    const { productDetails } = this.props;
+
+    for (let i = 0; i < productDetails.attributes.length; ) {
+      const attr = productDetails.attributes[i];
       attributeMap[attr.id] = attr.items[0].id;
+      i += 1;
     }
-    this.setState({
-      ...this.state,
-      productAttributes: attributeMap,
+    this.setState((prevState) => {
+      return {
+        ...prevState,
+        productAttributes: attributeMap,
+      };
     });
   }
 
   changeProductAttributes = (attributeId, value) => {
-    this.setState({
-      ...this.state,
-      productAttributes: {
-        ...this.state.productAttributes,
-        [attributeId]: value,
-      },
+    this.setState((prevState) => {
+      return {
+        ...prevState,
+        productAttributes: {
+          ...prevState.productAttributes,
+          [attributeId]: value,
+        },
+      };
     });
   };
 
   handleAddToCart = () => {
-    if (this.props.productDetails.inStock == false) {
+    const { productDetails, addToCartAction : addToCart } = this.props;
+    const { productAttributes } = this.state;
+
+    if (productDetails.inStock == false) {
       return;
     }
 
-    this.props.addToCart({
-      productId: this.props.productDetails.productId,
-      productBrand: this.props.productDetails.brand,
-      productName: this.props.productDetails.name,
-      productGallery: this.props.productDetails.gallery,
-      productPrice: this.props.productDetails.prices,
-      productAttributes: this.props.productDetails.attributes,
-      productSelectedAttributes: this.state.productAttributes,
+    addToCart({
+      productId: productDetails.productId,
+      productBrand: productDetails.brand,
+      productName: productDetails.name,
+      productGallery: productDetails.gallery,
+      productPrice: productDetails.prices,
+      productAttributes: productDetails.attributes,
+      productSelectedAttributes: productAttributes,
     });
   };
 
   render() {
-    if (this.state.productAttributes == null) {
+    const { productAttributes  , isMiniCartOpen} = this.state;
+    const { productDetails, isMouseOver, toggleIsMouseOver } = this.props;
+
+    if (productAttributes == null) {
       return;
     }
 
     return (
       <>
-        {this.props.isMouseOver == true && (
+        {isMouseOver == true && (
           <div
             onClick={(e) => {
               e.stopPropagation();
-              this.setState({ ...this.state, isMiniCartOpen: true });
-              if (this.props.productDetails.attributes.length == 0) {
+              this.setState((prevState) => {
+                return { ...prevState, isMiniCartOpen: true };
+              });
+              if (productDetails.attributes.length == 0) {
                 this.handleAddToCart();
               }
             }}
-            className={style['svg-container']}
+            className={style["svg-container"]}
           >
             <svg
               width="50"
@@ -132,51 +148,51 @@ class MiniCart extends Component {
           </div>
         )}
 
-        {this.props.productDetails.attributes.length != 0
-          && this.state.isMiniCartOpen == true && (
-            <div
-              onClick={(e) => {
-                e.stopPropagation();
-              }}
-              className={style['mini-cart-dropdown']}
-            >
-              <div className={style['mini-cart-container']}>
-                <ProductAttributes
-                  productAttributes={this.state.productAttributes}
-                  changeProductAttributes={this.changeProductAttributes}
-                  attributes={this.props.productDetails.attributes}
-                  lableFontSize="1rem"
-                  optionWidth="3rem"
-                />
-                <div
-                  className={style['add-to-cart']}
-                  onClick={this.handleAddToCart}
-                >
-                  ADD TO CART
-                </div>
+        {productDetails.attributes.length != 0 && isMiniCartOpen == true && (
+          <div
+            onClick={(e) => {
+              e.stopPropagation();
+            }}
+            className={style["mini-cart-dropdown"]}
+          >
+            <div className={style["mini-cart-container"]}>
+              <ProductAttributes
+                productAttributes={this.state.productAttributes}
+                changeProductAttributes={this.changeProductAttributes}
+                attributes={this.props.productDetails.attributes}
+                lableFontSize="1rem"
+                optionWidth="3rem"
+              />
+              <div
+                className={style["add-to-cart"]}
+                onClick={this.handleAddToCart}
+              >
+                ADD TO CART
               </div>
             </div>
+          </div>
         )}
-        {this.props.productDetails.attributes.length != 0
-          && this.state.isMiniCartOpen == true && (
-            <div
-              className={style['mini-cart-backdrop']}
-              onClick={(e) => {
-                e.stopPropagation();
-                this.setState({
-                  ...this.setState,
+        {productDetails.attributes.length != 0 && isMiniCartOpen == true && (
+          <div
+            className={style["mini-cart-backdrop"]}
+            onClick={(e) => {
+              e.stopPropagation();
+              this.setState((prevState) => {
+                return {
+                  ...prevState,
                   isMiniCartOpen: false,
-                });
+                };
+              });
 
-                this.props.toggleIsMouseOver();
-              }}
-            />
+              toggleIsMouseOver();
+            }}
+          />
         )}
       </>
     );
   }
 }
 
-const mapStateToProps = (state) => ({});
+const mapStateToProps = () => ({});
 
-export default connect(mapStateToProps, { addToCart })(MiniCart);
+export default connect(mapStateToProps, { addToCartAction })(MiniCart);

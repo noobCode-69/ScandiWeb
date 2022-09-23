@@ -1,68 +1,72 @@
-import React, { Component } from 'react';
-
-import { StyledProductCard } from './ProductCard.styled';
-
-import withRouter from '../hoc/withRouter';
-
-import ProductAmount from '../product-utils/productAmount/ProductAmount';
-import MiniCart from '../minicart/MiniCart';
+import React, { Component } from "react";
+import { StyledProductCard } from "./ProductCard.styled";
+import withRouter from "../hoc/withRouter";
+import ProductAmount from "../product-utils/productAmount/ProductAmount";
+import MiniCart from "../minicart/MiniCart";
 
 class ProductCard extends Component {
   constructor(props) {
     super(props);
-    console.log(props);
-
     this.state = {
       isMouseOver: false,
     };
   }
 
   toggleIsMouseOver = () => {
-    this.setState({
-      ...this.setState,
-      isMouseOver: !this.state.isMouseOver,
+    this.setState((prevState) => {
+      return {
+        ...prevState,
+        isMouseOver: !prevState.isMouseOver,
+      };
     });
   };
 
   render() {
+    const { url, productDetails, navigate } = this.props;
+    const { isMouseOver } = this.state;
+
     return (
       <StyledProductCard
         onClick={() => {
-          this.props.navigate(this.props.url);
+          navigate(url);
         }}
         onMouseOver={() => {
-          this.setState({ ...this.state, isMouseOver: true });
+          this.setState((prevState) => {
+            return { ...prevState, isMouseOver: true };
+          });
         }}
         onMouseLeave={() => {
-          this.setState({ ...this.state, isMouseOver: false });
+          this.setState((prevState) => {
+            return { ...prevState, isMouseOver: false };
+          });
         }}
       >
-        {this.props.productDetails.inStock == false && (
+        {productDetails.inStock === false && (
           <div className="front-backdrop">
             <p>OUT OF STOCK</p>
           </div>
         )}
 
         <div className="img-container">
-          <img src={this.props.productDetails.gallery[0]} />
+          <img src={productDetails.gallery[0]} />
         </div>
 
         <MiniCart
           toggleIsMouseOver={this.toggleIsMouseOver}
-          isMouseOver={this.state.isMouseOver}
-          productDetails={this.props.productDetails}
+          isMouseOver={isMouseOver}
+          productDetails={productDetails}
         />
 
         <div className="info-container">
           <div className="info-container__product-title">
             <p className="info-container__product-brand">
-              {this.props.productDetails.brand}
+              {productDetails.brand}
             </p>
             <p className="info-container__product-name">
-              {this.props.productDetails.name}
+              {productDetails.name}
             </p>
           </div>
-          <ProductAmount priceArray={this.props.productDetails.prices} />
+          <ProductAmount priceArray={productDetails.prices} />
         </div>
       </StyledProductCard>
     );

@@ -1,64 +1,75 @@
-import React, { Component } from 'react';
-import style from './Navbar.module.css';
-import { fetchCategories } from '../../utils/api';
-import Navlink from '../navlink/Navlink';
-import withRouter from '../hoc/withRouter';
-import Currency from '../currency/Currency';
-import CartDropDown from '../cartDropdown/CartDropDown';
+import React, { Component } from "react";
+import style from "./Navbar.module.css";
+import { fetchCategories } from "../../utils/api";
+import Navlink from "../navlink/Navlink";
+import withRouter from "../hoc/withRouter";
+import Currency from "../currency/Currency";
+import CartDropDown from "../cartDropdown/CartDropDown";
 
 class Navbar extends Component {
   constructor(props) {
     super(props);
+    const { params } = this.props;
     this.state = {
       categories: null,
-      activeCategory: this.props.params.categoryId || null,
+      activeCategory: params.categoryId || null,
     };
   }
 
   async componentDidMount() {
+    const { navigate, location } = this.props;
+
+    const { activeCategory } = this.state;
+
     const data = await fetchCategories();
     if (data.error != undefined) {
-      this.props.navigate('/error');
+      navigate("/error");
       return;
     }
 
-    this.setState({
-      ...this.state,
-      categories: data.data.categories,
-      activeCategory: this.state.activeCategory || data.data.categories[0].name,
+    const { categories } = data.data;
+
+    this.setState((prevState) => {
+      return {
+        ...prevState,
+        categories: categories,
+        activeCategory: activeCategory || categories[0].name,
+      };
     });
 
-    if (this.props.location.pathname === '/') {
-      this.props.navigate(`/${data.data.categories[0].name}`);
+    if (location.pathname === "/") {
+      navigate(`/${categories[0].name}`);
     }
   }
 
   navlinkClickHandler = (clickedLink) => {
-    this.setState({ ...this.state, activeCategory: clickedLink });
+    this.setState((prevState) => {
+      return { ...prevState, activeCategory: clickedLink };
+    });
   };
 
   render() {
-    if (this.state.categories == null || this.state.activeCategory == null) {
+    const { categories, activeCategory } = this.state;
+
+    if (categories == null || activeCategory == null) {
       return null;
     }
 
     return (
       <div className={style.navbar}>
-        <div className={style['navbar-links']}>
-          {this.state.categories.map((category) => (
+        <div className={style["navbar-links"]}>
+          {categories.map((category) => (
             <Navlink
               key={category.name}
               url={`${category.name}`}
               text={category.name}
-              isActive={
-                  category.name == this.state.activeCategory
-                }
+              isActive={category.name == activeCategory}
               onClick={this.navlinkClickHandler}
             />
           ))}
         </div>
 
-        <div className={style['navbar-logo']}>
+        <div className={style["navbar-logo"]}>
           <svg
             width="33"
             height="31"
@@ -98,7 +109,7 @@ class Navbar extends Component {
           </svg>
         </div>
 
-        <div className={style['navbar-icons']}>
+        <div className={style["navbar-icons"]}>
           <Currency />
           <CartDropDown />
         </div>

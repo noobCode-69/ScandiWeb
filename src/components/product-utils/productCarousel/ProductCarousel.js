@@ -1,5 +1,5 @@
-import React, { Component } from 'react';
-import styled from 'styled-components';
+import React, { Component } from "react";
+import styled from "styled-components";
 
 class ProductCarousel extends Component {
   constructor(props) {
@@ -10,41 +10,49 @@ class ProductCarousel extends Component {
   }
 
   changeCurrentImage(left) {
+    const { images } = this.props;
+
     if (left == true) {
-      this.setState({
-        ...this.state,
-        currentImage:
-          (this.state.currentImage - 1 + this.props.images.length)
-          % this.props.images.length,
+      this.setState((prevState) => {
+        return {
+          ...prevState,
+          currentImage:
+            (prevState.currentImage - 1 + images.length) % images.length,
+        };
       });
     } else {
-      this.setState({
-        ...this.state,
-        currentImage: (this.state.currentImage + 1) % this.props.images.length,
+      this.setState((prevState) => {
+        return {
+          ...prevState,
+          currentImage: (prevState.currentImage + 1) % images.length,
+        };
       });
     }
   }
 
   render() {
+    const { images } = this.props;
+    const { currentImage } = this.state;
+
     return (
       <StyleCarousel
-        singleImage={this.props.images.length == 1}
-        bgimg={this.props.images[this.state.currentImage]}
+        singleImage={images.length == 1}
+        bgimg={images[currentImage]}
       >
-        {this.props.images.length > 1 && (
+        {images.length > 1 && (
           <div className="carousel-buttons">
-            {' '}
+            {" "}
             <div
               onClick={() => this.changeCurrentImage(true)}
               className="carousel-button"
             >
-              {'<'}
+              {"<"}
             </div>
             <div
               onClick={() => this.changeCurrentImage(false)}
               className="carousel-button"
             >
-              {'>'}
+              {">"}
             </div>
           </div>
         )}
@@ -80,7 +88,8 @@ const StyleCarousel = styled.div`
   }
 
   & .carousel-button:hover {
-    cursor: ${({ singleImage }) => (singleImage == true ? 'not-allowed' : 'pointer')};
+    cursor: ${({ singleImage }) =>
+      singleImage == true ? "not-allowed" : "pointer"};
   }
 `;
 
