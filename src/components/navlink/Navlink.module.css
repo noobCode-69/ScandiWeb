@@ -1,0 +1,12 @@
+.active {
+    font-weight: 800;
+    color: #1DCF65;
+    border-bottom: 2px solid #1DCF65;
+    border-top: 2px solid transparent;
+}
+
+.inactive {
+    border-top: 2px solid transparent;
+    font-weight: 500;
+    color: #43464E;
+}

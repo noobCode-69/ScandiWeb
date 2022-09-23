@@ -1,0 +1,73 @@
+.backdrop {
+    position: fixed;
+    width: 100vw;
+    height: 100vh;
+    top: 0;
+    right: 0;
+    z-index: 1000;
+}
+
+.currency-icon-container {
+    height: 1.5rem;
+    font-size: 1rem;
+    gap: 0.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: row;
+}
+
+.currency-icon-container>* {
+    width: 1rem;
+    text-align: center;
+    font-weight: bold;
+}
+
+.currency-icon-container:hover {
+    cursor: pointer;
+}
+
+
+
+.svg-container svg {
+    width: 100%;
+    height: 100%;
+}
+
+
+.options-container {
+    padding: 0.5rem 0;
+    background-color: white;
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 0px 5px 0px,
+        rgba(0, 0, 0, 0.1) 0px 0px 1px 0px;
+    position: absolute;
+    top: 150%;
+    right: 50%;
+    color: #43464E;
+    z-index: 100000;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    transform: translateX(50%);
+}
+
+.option {
+    font-weight: 500;
+    font-size: 0.9rem;
+    width: 80px;
+    padding: 0.25rem 0.75rem;
+}
+
+.option:hover {
+
+    cursor: pointer;
+    background-color: rgba(0, 0, 0, 0.05);
+
+}
+
+
+/* top 150%
+    right: 50%
+    transfrom: translateX(50%);
+*/

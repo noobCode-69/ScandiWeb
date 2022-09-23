@@ -1,0 +1,56 @@
+.mini-cart-container {
+    display: flex;
+    flex-direction: column;
+    padding: 1rem;
+    background-color: white;
+    align-items: flex-start;
+    justify-content: space-between;
+}
+
+.add-to-cart {
+    align-self: center;
+    font-size: 0.8rem;
+    padding: 0.5rem 1.5rem;
+    font-weight: 600;
+    border: 1px solid #43464E;
+}
+
+.add-to-cart:hover {
+    cursor: pointer;
+
+}
+
+.svg-container {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    transform: translate(-50%, -150%);
+    z-index: 100;
+}
+
+.svg-container svg:hover {
+    cursor: pointer;
+}
+
+
+
+.mini-cart-dropdown {
+
+    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+    position: absolute;
+    min-width: 250px;
+    top: 50%;
+    left: 50%;
+    transform: translate(-55%, -65%);
+    z-index: 1000;
+}
+
+.mini-cart-backdrop {
+    background-color: rgba(0, 0, 0, 0.2);
+    width: 100vw;
+    height: 100vh;
+    position: fixed;
+    left: 0;
+    top: 0;
+    z-index: 100;
+}

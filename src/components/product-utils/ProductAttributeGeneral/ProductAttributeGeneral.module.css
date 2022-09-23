@@ -1,0 +1,38 @@
+.attribute-container {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+
+.label {
+    font-weight: 600;
+}
+
+.options {
+    gap: 1rem;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+}
+
+.option {
+    aspect-ratio: 1.5;
+    font-size: 0.8rem;
+    border: 1px solid #43464E;
+    color: black;
+    padding: 0.25rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+}
+
+.option:hover {
+    cursor: pointer;
+}
+
+.active {
+    background-color: #43464E;
+    color: white;
+}

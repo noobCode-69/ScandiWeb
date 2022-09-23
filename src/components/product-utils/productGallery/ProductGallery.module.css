@@ -1,0 +1,46 @@
+.gallery-container {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    height: 500px;
+    width: 700px;
+    flex-shrink: 0;
+}
+
+
+
+.unpinned-img-container {
+    display: flex;
+    flex-direction: column;
+    padding: 0 1rem;
+    width: 85px;
+    overflow-y: scroll;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+    gap: 0.5rem;
+}
+
+.unpinned-img-container::-webkit-scrollbar {
+    display: none;
+}
+
+.unpinned-img-container img {
+    width: 100%;
+    aspect-ratio: 1;
+    object-fit: contain;
+}
+
+
+
+.unpinned-img-container img:hover {
+    cursor: pointer;
+}
+
+.pinned-img-container {
+    flex-grow: 1;
+
+}
+
+.pinned-img-container img {
+    object-fit: contain;
+}
