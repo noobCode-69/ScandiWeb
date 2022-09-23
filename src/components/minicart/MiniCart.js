@@ -45,7 +45,7 @@ class MiniCart extends Component {
   };
 
   handleAddToCart = () => {
-    const { productDetails, addToCartAction : addToCart } = this.props;
+    const { productDetails, addToCartAction: addToCart } = this.props;
     const { productAttributes } = this.state;
 
     if (productDetails.inStock == false) {
@@ -64,7 +64,7 @@ class MiniCart extends Component {
   };
 
   render() {
-    const { productAttributes  , isMiniCartOpen} = this.state;
+    const { productAttributes, isMiniCartOpen } = this.state;
     const { productDetails, isMouseOver, toggleIsMouseOver } = this.props;
 
     if (productAttributes == null) {
@@ -165,7 +165,15 @@ class MiniCart extends Component {
               />
               <div
                 className={style["add-to-cart"]}
-                onClick={this.handleAddToCart}
+                onClick={() => {
+                  this.handleAddToCart();
+                  this.setState((prevState) => {
+                    return {
+                      ...prevState,
+                      isMiniCartOpen: false,
+                    };
+                  });
+                }}
               >
                 ADD TO CART
               </div>
@@ -183,7 +191,6 @@ class MiniCart extends Component {
                   isMiniCartOpen: false,
                 };
               });
-
               toggleIsMouseOver();
             }}
           />
