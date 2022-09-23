@@ -50,7 +50,12 @@ class Currency extends Component {
   };
 
   render() {
-    const { selectedCurrency, isOpen, toggle } = this.props;
+    const {
+      selectedCurrency,
+      isOpen,
+      toggle,
+      updateCurrencyAction: updateCurrency,
+    } = this.props;
     const { currencies } = this.state;
 
     if (
@@ -112,7 +117,7 @@ class Currency extends Component {
               <div
                 className={style.option}
                 onClick={() => {
-                  this.props.updateCurrency({
+                  updateCurrency({
                     label: currency.label,
                     symbol: currency.symbol,
                   });
