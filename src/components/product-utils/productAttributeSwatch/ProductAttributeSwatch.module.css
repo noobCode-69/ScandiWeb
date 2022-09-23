@@ -17,6 +17,7 @@
 }
 
 .option {
+    width: 1.25rem;
     max-width: 1.5rem;
     border : 1px solid #43464E;
     aspect-ratio: 1;
