@@ -6,7 +6,13 @@
 }
 
 .inactive {
+    border-bottom: 2px solid transparent;
     border-top: 2px solid transparent;
     font-weight: 500;
     color: #43464E;
+}
+
+.inactive:hover {
+    color: #1DCF65;
+    border-bottom-color: #1DCF65;
 }
