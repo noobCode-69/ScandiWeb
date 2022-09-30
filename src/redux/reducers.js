@@ -6,6 +6,9 @@ const updateCurrencyReducer = (
   action
 ) => {
   if (action.type === "UPDATE_CURRENCY") {
+
+    
+
     localStorage.setItem(
       "selectedCurrency",
       JSON.stringify({
