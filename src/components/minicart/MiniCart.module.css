@@ -12,7 +12,9 @@
     font-size: 0.8rem;
     padding: 0.5rem 1.5rem;
     font-weight: 600;
-    border: 1px solid #43464E;
+    color: white;
+    background-color: #1DCF65;
+
 }
 
 .add-to-cart:hover {
