@@ -28,7 +28,8 @@ class Cart extends Component {
         {cartItems.length > 0 &&
           cartItems.map((cartItem) => (
             <CartItem
-              lableFontSize="1rem"
+              lableFontSize="1.1rem"
+              optionWidth="3rem"
               key={JSON.stringify(cartItem.productSelectedAttributes)}
               item={cartItem}
             />
@@ -53,6 +54,7 @@ class Cart extends Component {
 }
 
 const StyledCartItemContainer = styled.div`
+
   & .cart-info button {
     font-size: 1rem;
     font-weight: bold;
