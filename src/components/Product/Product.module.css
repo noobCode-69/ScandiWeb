@@ -76,3 +76,12 @@
     flex-direction: column;
     gap: 0.75rem;
 }
+
+.not-available {
+    color: white;
+    background-color: rgba(0, 0, 0, 0.2);
+}
+
+.not-available:hover{
+    cursor: not-allowed;
+}

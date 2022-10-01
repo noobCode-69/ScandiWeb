@@ -164,7 +164,11 @@ class MiniCart extends Component {
                 optionWidth="3rem"
               />
               <div
-                className={style["add-to-cart"]}
+                className={`${style["add-to-cart"]}  ${
+                  productDetails.inStock === false
+                    ? style["not-available"]
+                    : null
+                }`}
                 onClick={() => {
                   this.handleAddToCart();
                   this.setState((prevState) => {

@@ -109,7 +109,9 @@ class Product extends Component {
           <button
             type="submit"
             onClick={this.handleAddToCart}
-            className={style["product-add-to-cart"]}
+            className={`${style["product-add-to-cart"]} ${
+              productDetails.inStock === false ? style["not-available"] : null
+            }`}
           >
             ADD TO CART
           </button>

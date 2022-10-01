@@ -56,3 +56,12 @@
     top: 0;
     z-index: 100;
 }
+
+.not-available {
+    color: white;
+    background-color: rgba(0, 0, 0, 0.2);
+}
+
+.not-available:hover{
+    cursor: not-allowed;
+}
