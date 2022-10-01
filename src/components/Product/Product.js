@@ -1,5 +1,6 @@
 import React, { Component } from "react";
-import parse from "html-react-parser";
+
+import sanitizeHtml from "sanitize-html";
 import { connect } from "react-redux";
 import style from "./Product.module.css";
 import { addToCart as addToCartAction } from "../../redux/actions";
@@ -116,9 +117,12 @@ class Product extends Component {
             ADD TO CART
           </button>
 
-          <div className={style["product-description"]}>
-            {parse(productDetails.description)}
-          </div>
+          <div
+            className={style["product-description"]}
+            dangerouslySetInnerHTML={{
+              __html: sanitizeHtml(productDetails.description),
+            }}
+          ></div>
         </div>
       </div>
     );
