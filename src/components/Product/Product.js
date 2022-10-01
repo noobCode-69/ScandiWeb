@@ -75,7 +75,7 @@ class Product extends Component {
   render() {
     const { productDetails, productAttributes } = this.state;
 
-    if (productDetails == null) {
+    if (productDetails === null) {
       return <h1>Loading.</h1>;
     }
 
