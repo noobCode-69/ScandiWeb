@@ -48,7 +48,7 @@ class MiniCart extends Component {
     const { productDetails, addToCartAction: addToCart } = this.props;
     const { productAttributes } = this.state;
 
-    if (productDetails.inStock == false) {
+    if (productDetails.inStock === false) {
       return;
     }
 
@@ -67,20 +67,20 @@ class MiniCart extends Component {
     const { productAttributes, isMiniCartOpen } = this.state;
     const { productDetails, isMouseOver, toggleIsMouseOver } = this.props;
 
-    if (productAttributes == null) {
+    if (productAttributes === null) {
       return;
     }
 
     return (
       <>
-        {isMouseOver == true && (
+        {isMouseOver === true && (
           <div
             onClick={(e) => {
               e.stopPropagation();
               this.setState((prevState) => {
                 return { ...prevState, isMiniCartOpen: true };
               });
-              if (productDetails.attributes.length == 0) {
+              if (productDetails.attributes.length === 0) {
                 this.handleAddToCart();
               }
             }}
@@ -148,7 +148,7 @@ class MiniCart extends Component {
           </div>
         )}
 
-        {productDetails.attributes.length != 0 && isMiniCartOpen == true && (
+        {productDetails.attributes.length !== 0 && isMiniCartOpen === true && (
           <div
             onClick={(e) => {
               e.stopPropagation();
@@ -184,7 +184,7 @@ class MiniCart extends Component {
             </div>
           </div>
         )}
-        {productDetails.attributes.length != 0 && isMiniCartOpen == true && (
+        {productDetails.attributes.length !== 0 && isMiniCartOpen === true && (
           <div
             className={style["mini-cart-backdrop"]}
             onClick={(e) => {
