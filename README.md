@@ -15,7 +15,7 @@ To run the application, you need to have the following installed on your system:
 
 1) This web app expects you to provide a GraphQL backend at port 4000
 2) Node.js
-3)npm or yarn
+3) npm or yarn
 
 ## Getting Started
 1) Clone the repository.
