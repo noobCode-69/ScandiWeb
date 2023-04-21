@@ -1,8 +1,8 @@
 export const fetchCategories = async () => {
   try {
-    let data = await fetch('http://localhost:4000/', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+    let data = await fetch("https://witty-red-puppy.cyclic.app/", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
         query: `
             query {
@@ -16,15 +16,15 @@ export const fetchCategories = async () => {
     data = await data.json();
     return data;
   } catch (error) {
-    return { error: error.message || 'Something terrible happened' };
+    return { error: error.message || "Something terrible happened" };
   }
 };
 
 export const fetchCurrencies = async () => {
   try {
-    let data = await fetch('http://localhost:4000/', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+    let data = await fetch("https://witty-red-puppy.cyclic.app//", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
         query: `
           query {
@@ -39,15 +39,15 @@ export const fetchCurrencies = async () => {
     data = await data.json();
     return data;
   } catch (error) {
-    return { error: error.message || 'Something terrible happened' };
+    return { error: error.message || "Something terrible happened" };
   }
 };
 
 export const fetchProducts = async (category) => {
   try {
-    let data = await fetch('http://localhost:4000/', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+    let data = await fetch("https://witty-red-puppy.cyclic.app/", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
         query: `
           query {
@@ -85,15 +85,15 @@ export const fetchProducts = async (category) => {
     data = await data.json();
     return data;
   } catch (error) {
-    return { error: error.message || 'Something terrible happened' };
+    return { error: error.message || "Something terrible happened" };
   }
 };
 
 export const fetchProductDetails = async (productId) => {
   try {
-    let data = await fetch('http://localhost:4000/', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+    let data = await fetch("https://witty-red-puppy.cyclic.app/", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
         query: `
           query {
@@ -129,6 +129,6 @@ export const fetchProductDetails = async (productId) => {
     data = await data.json();
     return data;
   } catch (error) {
-    return { error: error.message || 'Something terrible happened' };
+    return { error: error.message || "Something terrible happened" };
   }
 };
